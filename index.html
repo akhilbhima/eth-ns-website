@@ -32,7 +32,7 @@
     <!-- Hero (video card) -->
     <section class="heroV2">
       <div class="heroCard">
-        <video class="heroVideo" autoplay muted loop playsinline preload="metadata" poster="assets/eventpics/apr26meetup.jpg">
+        <video class="heroVideo" autoplay muted loop playsinline webkit-playsinline="true" preload="auto" disableRemotePlayback x-webkit-airplay="deny" poster="assets/eventpics/apr26meetup.jpg">
           <source src="assets/eth-ns-video.mp4" type="video/mp4" />
         </video>
         <div class="heroOverlay"></div>
@@ -427,6 +427,38 @@
   </div>
   <script>
     (function () {
+      // Hero video — force playback on iOS / Low Power Mode and retry on first user gesture
+      var heroVideo = document.querySelector(".heroVideo");
+      if (heroVideo) {
+        heroVideo.muted = true;
+        heroVideo.setAttribute("muted", "");
+        heroVideo.setAttribute("playsinline", "");
+        var tryPlay = function () {
+          var p = heroVideo.play();
+          if (p && typeof p.catch === "function") {
+            p.catch(function () { /* will retry on user gesture */ });
+          }
+        };
+        tryPlay();
+        if (heroVideo.readyState >= 2) tryPlay();
+        heroVideo.addEventListener("loadeddata", tryPlay, { once: true });
+        heroVideo.addEventListener("canplay", tryPlay, { once: true });
+        var resumeOnGesture = function () {
+          tryPlay();
+          if (!heroVideo.paused) {
+            ["touchstart", "click", "scroll"].forEach(function (ev) {
+              window.removeEventListener(ev, resumeOnGesture, true);
+            });
+          }
+        };
+        ["touchstart", "click", "scroll"].forEach(function (ev) {
+          window.addEventListener(ev, resumeOnGesture, { capture: true, passive: true });
+        });
+        document.addEventListener("visibilitychange", function () {
+          if (!document.hidden) tryPlay();
+        });
+      }
+
       // Calendar today/past auto-tagging (no-op if calendar removed)
       var now = new Date();
       var todayISO = now.getFullYear() + "-"
