@@ -1502,22 +1502,31 @@ html { scroll-behavior: smooth; }
   .partnersTierCommunity { grid-template-columns: repeat(7, 1fr); }
 }
 @media (max-width: 720px) {
-  .partnersSection { width: min(1080px, 100% - 1.5rem); margin: 3rem auto 2.5rem; }
+  .partnersSection { width: min(1080px, 100% - 1.25rem); margin: 3rem auto 2.5rem; }
   .partnersHeading { margin-bottom: 1.75rem; }
-  .partnersTierPrimary { grid-template-columns: repeat(3, 1fr); gap: 8px; }
-  .partnersTierCommunity { grid-template-columns: repeat(4, 1fr); gap: 6px; }
-  .partnerCell { min-height: 56px; padding: 10px 8px; border-radius: 10px; }
-  .partnerCell img { max-height: 26px; }
-  .partnersTierCommunity .partnerCell { min-height: 52px; padding: 8px 6px; }
-  .partnersTierCommunity .partnerCell img { max-height: 22px; }
-  .partnersTierCommunity .partnerCellLabel { font-size: .62rem; }
-  .partnersDivider { margin: 1.5rem auto 1rem; font-size: .62rem; gap: 8px; }
+  .partnersTierPrimary { grid-template-columns: repeat(4, 1fr); gap: 6px; }
+  .partnersTierCommunity { grid-template-columns: repeat(5, 1fr); gap: 5px; }
+  .partnerCell { min-height: 48px; padding: 8px 6px; border-radius: 9px; }
+  .partnerCell img { max-height: 20px; }
+  .partnerCellLabel { font-size: .68rem; }
+  .partnersTierCommunity .partnerCell { min-height: 42px; padding: 6px 4px; border-radius: 8px; }
+  .partnersTierCommunity .partnerCell img { max-height: 16px; }
+  .partnersTierCommunity .partnerCellLabel { font-size: .54rem; }
+  .partnersDivider { margin: 1.25rem auto .85rem; font-size: .58rem; gap: 6px; }
 }
-@media (max-width: 420px) {
-  .partnersTierPrimary { grid-template-columns: repeat(2, 1fr); }
-  .partnersTierCommunity { grid-template-columns: repeat(3, 1fr); }
-  .partnerCell { min-height: 60px; }
-  .partnersTierCommunity .partnerCell img { max-height: 24px; }
+@media (max-width: 480px) {
+  .partnersTierPrimary { grid-template-columns: repeat(3, 1fr); gap: 5px; }
+  .partnersTierCommunity { grid-template-columns: repeat(5, 1fr); gap: 4px; }
+  .partnerCell { min-height: 44px; padding: 6px 4px; }
+  .partnerCell img { max-height: 18px; }
+  .partnerCellLabel { font-size: .62rem; }
+  .partnersTierCommunity .partnerCell { min-height: 38px; padding: 5px 3px; }
+  .partnersTierCommunity .partnerCell img { max-height: 14px; }
+  .partnersTierCommunity .partnerCellLabel { font-size: .5rem; }
+}
+@media (max-width: 360px) {
+  .partnersTierPrimary { grid-template-columns: repeat(3, 1fr); }
+  .partnersTierCommunity { grid-template-columns: repeat(4, 1fr); }
 }
 
 /* ===== Life at Network School ===== */
