@@ -156,27 +156,28 @@ a { color: inherit; text-decoration: none; }
 
 /* Upcoming strip */
 .upcomingStrip {
-  background-color: var(--bg);
-  border-radius: 12px;
-  padding: .2rem 0;
-  margin-bottom: .75rem;
+  width: 100%;
+  max-width: none;
+  margin: 2.5rem auto 1.5rem;
+  padding: 0 1.75rem;
   position: relative;
+  background: transparent;
+  border-radius: 0;
 }
 .stripHeader {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  margin-bottom: .75rem;
+  margin-bottom: 1.25rem;
 }
-.stripTitle {
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 1.1rem;
+.stripTitle,
+.stripMonth {
+  font-family: Inter, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -.005em;
+  color: #0a0a0a;
   margin: 0;
-}
-.stripViewAll {
-  color: var(--accent-dark);
-  font-size: .82rem;
-  white-space: nowrap;
 }
 .stripViewAll:hover { text-decoration: underline; text-underline-offset: 3px; }
 
@@ -450,6 +451,264 @@ a { color: inherit; text-decoration: none; }
   font-size: .85rem;
 }
 
+/* ===== Scroll reveal (Arbitrum-style) ===== */
+.scrollReveal {
+  opacity: 0;
+  transform: translateY(28px) scale(.985);
+  transition:
+    opacity .9s cubic-bezier(.22, 1, .36, 1),
+    transform .9s cubic-bezier(.22, 1, .36, 1);
+  will-change: opacity, transform;
+}
+.scrollReveal.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .scrollReveal { opacity: 1; transform: none; transition: none; }
+}
+
+/* ===== Luma calendar embed ===== */
+.lumaEmbedSection {
+  width: 100%;
+  margin: 1.5rem auto 4.5rem;
+  padding: 1.5rem 1.75rem 3rem;
+  position: relative;
+}
+.lumaEmbedSection::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(60% 60% at 50% 100%, rgba(111, 76, 235, .08) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+.lumaEmbedSection > * { position: relative; z-index: 1; }
+.lumaEmbedHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 1rem;
+}
+.lumaEmbedTitle {
+  font-family: Inter, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -.005em;
+  color: #0a0a0a;
+  margin: 0;
+}
+.lumaEmbedLink {
+  font-size: .82rem;
+  font-weight: 500;
+  color: #5b566e;
+  white-space: nowrap;
+  transition: color .15s;
+}
+.lumaEmbedLink:hover { color: #6f4ceb; }
+.lumaEmbedFrame {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  height: clamp(620px, 86vh, 880px);
+  border-radius: 22px;
+  border: 1px solid #e6e3ee;
+  overflow: hidden;
+  background: #fff;
+  padding: 22px;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, .9) inset,
+    0 2px 4px rgba(20, 14, 60, .04),
+    0 12px 28px -10px rgba(20, 14, 60, .12),
+    0 32px 60px -20px rgba(111, 76, 235, .18);
+  transition: transform .35s cubic-bezier(.22, 1, .36, 1), box-shadow .35s cubic-bezier(.22, 1, .36, 1);
+}
+.lumaEmbedFrame:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, .9) inset,
+    0 4px 8px rgba(20, 14, 60, .06),
+    0 18px 36px -10px rgba(20, 14, 60, .16),
+    0 44px 80px -22px rgba(111, 76, 235, .28);
+}
+.lumaEmbedFrame iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+  border-radius: 12px;
+  background: #0a0a0a;
+}
+@media (max-width: 600px) {
+  .lumaEmbedFrame { padding: 14px; border-radius: 18px; }
+  .lumaEmbedFrame iframe { border-radius: 10px; }
+}
+@media (max-width: 900px) {
+  .lumaEmbedSection { padding: 0 1rem; }
+  .lumaEmbedFrame { height: clamp(480px, 70vh, 680px); border-radius: 12px; }
+}
+@media (max-width: 600px) {
+  .lumaEmbedSection { padding: 0 .75rem; }
+  .lumaEmbedFrame { height: 560px; border-radius: 10px; }
+}
+
+/* ===== May 2026 Calendar Grid ===== */
+.calendar {
+  width: 100%;
+  margin: 0 auto 3rem;
+  padding: 0 1.75rem;
+}
+.calWeekdays {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 10px;
+  padding: 0 4px;
+}
+.calWeekdays span {
+  font-size: .68rem;
+  font-weight: 600;
+  letter-spacing: .12em;
+  color: #8a869b;
+  text-transform: uppercase;
+}
+.calGrid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 8px;
+}
+.calCell {
+  position: relative;
+  min-height: 110px;
+  border-radius: 14px;
+  background: #fff;
+  border: 1px solid #ececf0;
+  padding: .65rem .75rem;
+  display: flex;
+  flex-direction: column;
+  gap: .35rem;
+  color: #0a0a0a;
+  text-decoration: none;
+  transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease, background .18s ease;
+  overflow: hidden;
+}
+.calCellEmpty {
+  background: transparent;
+  border: 1px dashed #f1eef7;
+  min-height: 110px;
+}
+.calCellEmpty::before { content: ""; }
+.calCell:not(.calCellEmpty):not([href]) {
+  background: #fafafb;
+  border-color: #f1f0f4;
+}
+.calCell[href]:hover {
+  transform: translateY(-2px);
+  border-color: #6f4ceb;
+  box-shadow: 0 6px 18px -8px rgba(111, 76, 235, .35);
+}
+.calNum {
+  font-family: Inter, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -.02em;
+  color: #0a0a0a;
+  line-height: 1;
+}
+.calCell:not([href]) .calNum { color: #b8b3c9; }
+.calCellPast .calNum { color: #c9c4d8; }
+.calCellEvent {
+  background: #fff;
+}
+.calEventTitle {
+  font-size: .72rem;
+  font-weight: 500;
+  line-height: 1.3;
+  color: #5b566e;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-top: auto;
+}
+.calCellEvent:hover .calEventTitle { color: #1f1d29; }
+
+/* Open Day cells: full purple emphasis */
+.calCellOpen {
+  background: linear-gradient(180deg, #6f4ceb 0%, #5836c9 100%);
+  border-color: #5836c9;
+  color: #fff;
+}
+.calCellOpen .calNum { color: #fff; }
+.calCellOpen .calEventTitle { color: rgba(255, 255, 255, .82); font-weight: 500; }
+.calCellOpen:hover {
+  border-color: #1f1d29;
+  box-shadow: 0 8px 22px -6px rgba(111, 76, 235, .55);
+}
+.calCellOpen:hover .calEventTitle { color: #fff; }
+.calOpenChip {
+  font-size: .54rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  color: #fff;
+  background: rgba(255, 255, 255, .18);
+  padding: .18rem .42rem;
+  border-radius: 999px;
+  align-self: flex-start;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+/* Today highlight */
+.calCellToday {
+  background: #0a0a0a !important;
+  border-color: #0a0a0a !important;
+  color: #fff !important;
+  box-shadow: 0 0 0 3px rgba(111, 76, 235, .25), 0 8px 22px -8px rgba(10, 10, 10, .35);
+}
+.calCellToday .calNum { color: #fff !important; }
+.calCellToday .calEventTitle { color: rgba(255, 255, 255, .8) !important; }
+.calCellToday:hover {
+  transform: translateY(-2px);
+  border-color: #6f4ceb !important;
+  box-shadow: 0 0 0 3px rgba(111, 76, 235, .45), 0 12px 26px -8px rgba(111, 76, 235, .5) !important;
+}
+.calCellToday:hover .calEventTitle { color: #fff !important; }
+.calTodayChip {
+  font-size: .54rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  color: #0a0a0a;
+  background: #fff;
+  padding: .18rem .42rem;
+  border-radius: 999px;
+  align-self: flex-start;
+  text-transform: uppercase;
+  line-height: 1;
+}
+@media (max-width: 600px) {
+  .calTodayChip { font-size: 0; padding: 0; width: 6px; height: 6px; background: #6f4ceb; border-radius: 50%; }
+}
+
+@media (max-width: 900px) {
+  .calendar { padding: 0 1rem; }
+  .calCell { min-height: 92px; border-radius: 12px; padding: .5rem .55rem; gap: .25rem; }
+  .calNum { font-size: .92rem; }
+  .calEventTitle { font-size: .65rem; -webkit-line-clamp: 2; }
+  .calOpenChip { font-size: .48rem; padding: .15rem .35rem; }
+  .calWeekdays span { font-size: .6rem; }
+}
+@media (max-width: 600px) {
+  .calendar { padding: 0 .75rem; }
+  .calGrid, .calWeekdays { gap: 5px; }
+  .calCell { min-height: 70px; border-radius: 10px; padding: .35rem .4rem; }
+  .calNum { font-size: .82rem; }
+  .calEventTitle { display: none; }
+  .calOpenChip { font-size: 0; padding: 0; width: 6px; height: 6px; background: #fff; border-radius: 50%; }
+  .calCellOpen { padding: .35rem .4rem; }
+}
+
 /* ===== Arbitrum-style Header ===== */
 .siteHeader {
   position: sticky;
@@ -577,7 +836,8 @@ a { color: inherit; text-decoration: none; }
   min-height: 480px;
   max-height: 820px;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: center;
 }
 .heroVideo {
   position: absolute;
@@ -602,6 +862,10 @@ a { color: inherit; text-decoration: none; }
   width: 100%;
   margin: 0 auto;
   color: #fff;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 .heroEyebrow {
   font-size: clamp(.7rem, .85vw, .85rem);
@@ -634,6 +898,7 @@ a { color: inherit; text-decoration: none; }
 .heroCtas {
   display: flex;
   flex-wrap: wrap;
+  justify-content: flex-start;
   gap: .75rem;
   margin-top: clamp(1.25rem, 2.5vh, 2rem);
 }
