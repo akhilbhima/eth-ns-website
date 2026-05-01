@@ -570,7 +570,7 @@
         });
       }
 
-      // FAQ — hover to expand, collapse on next entry
+      // FAQ — hover to expand on desktop; tap-accordion on touch devices
       var faqEntries = document.querySelectorAll(".faqEntry");
       var faqList = document.querySelector(".faqList");
       var canHover = window.matchMedia("(hover: hover)").matches;
@@ -585,6 +585,16 @@
         });
         faqList.addEventListener("mouseleave", function () {
           faqEntries.forEach(function (e) { e.removeAttribute("open"); });
+        });
+      } else {
+        faqEntries.forEach(function (entry) {
+          entry.addEventListener("toggle", function () {
+            if (entry.open) {
+              faqEntries.forEach(function (e) {
+                if (e !== entry && e.open) e.removeAttribute("open");
+              });
+            }
+          });
         });
       }
     })();
