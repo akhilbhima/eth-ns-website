@@ -1440,7 +1440,6 @@ html { scroll-behavior: smooth; }
 }
 /* Logos that ship with white/light artwork — force dark for visibility on white */
 .partnerCell img[src$="ethnslogo.png"],
-.partnerCell img[src$="ronin-mark-text-blue.svg"],
 .partnerCell img[src$="web3privacy.svg"],
 .partnerCell img[src$="ayahq.png"],
 .partnerCell img[src$="suci-logotype.png"],
